@@ -7,11 +7,13 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 int main(int argc, const char* argv[]) {
     // 创建监听的套接字
     int lfd = socket(AF_INET, SOCK_STREAM, 0);
-
+    //fcntl(lfd, F_SETFL, O_NONBLOCK);
     // 绑定
     struct sockaddr_in serv_addr;
     memset(&serv_addr, 0, sizeof(serv_addr));
@@ -30,6 +32,16 @@ int main(int argc, const char* argv[]) {
     socklen_t clien_len = sizeof(clien_addr);
     int cfd = accept(lfd, (struct sockaddr*)&clien_addr, &clien_len);
 
+    //fcntl(cfd, F_SETFL, O_NONBLOCK);
+    //
+    struct sockaddr_in sa;
+    int len = sizeof(sa);
+    if(!getpeername(cfd, (struct sockaddr *)&sa, &len))
+    {
+        printf( "对方IP：%s ", inet_ntoa(sa.sin_addr));
+        printf( "对方PORT：%d ", ntohs(sa.sin_port));
+    }
+    //
     char ipbuf[128];
     printf("client iP: %s, port: %d\n", inet_ntop(AF_INET, &clien_addr.sin_addr.s_addr, ipbuf, sizeof(ipbuf)),
            ntohs(clien_addr.sin_port));
@@ -37,7 +49,9 @@ int main(int argc, const char* argv[]) {
     char buf[1024] = {0};
     while(1) {
         // read data, 阻塞读取
-        int len = read(cfd, buf, sizeof(buf));
+        //int len = read(cfd, buf, sizeof(buf));
+        int len = recv(cfd, buf, sizeof(buf), 0);
+        printf("read len: %d\n", len);
         printf("read buf = %s\n", buf);
         // 小写转大写
         for(int i=0; i<len; ++i) {
@@ -46,9 +60,12 @@ int main(int argc, const char* argv[]) {
         printf("after buf = %s", buf);
 
         // 大写串发给客户端
-        write(cfd, buf, strlen(buf)+1);
+        //write(cfd, buf, strlen(buf)+1);
+        int ret = send(cfd, buf, strlen(buf)+1, 0);
+        printf("send_ret is:%d\n", ret);
     }
 
+    printf("close_fd\n");
     close(cfd);
     close(lfd);
 
