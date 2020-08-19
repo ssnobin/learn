@@ -19,12 +19,122 @@ int sub(lua_State* L)
     lua_pushnumber(L, op1 - op2);
     return 1;
 }
+
+int get(lua_State* L)
+{
+    //{watcherid:={"A"={maker1={e='A',id=xx,x=xx,y=xx},},"D"={},"U"={}}}
+    printf("element num:%d\n",lua_gettop(L));
+    lua_newtable(L);
+    printf("element num:%d\n",lua_gettop(L));
+
+    int evt_id = 1;
+    int idx_ret = lua_gettop(L);
+    lua_rawgeti(L, idx_ret, evt_id);
+    printf("idx_ret is %d\n", idx_ret);
+    if(lua_isnil(L, -1)) {
+        printf("idx_ret is nil\n");
+        lua_pop(L, 1);
+        lua_newtable(L);
+        //lua_newtable(L);
+        lua_pushvalue(L, -1);
+        printf("element here:%d\n",lua_gettop(L));
+        lua_rawseti(L, idx_ret, evt_id);
+        printf("element there:%d\n",lua_gettop(L));
+    }
+
+    int idx_evt_set = lua_gettop(L);
+    printf("idx_evt_set is %d\n", idx_evt_set);
+    lua_Integer marker_id = 1;
+    lua_rawgeti(L, idx_evt_set, marker_id);
+    if(lua_isnil(L, -1)) {
+        printf("idx_evt_set is nil\n");
+        lua_pop(L, 1);
+        lua_newtable(L);
+        //lua_newtable(L);
+        lua_pushvalue(L, -1);
+        lua_rawseti(L, idx_evt_set, marker_id);
+    }
+    printf("element gg:%d\n",lua_gettop(L));
+    size_t len = lua_rawlen(L, -1);
+    printf("len is %lu\n",len);
+    lua_pushinteger(L, 2);
+    lua_rawseti(L, -2, len+1);
+    lua_pop(L, 2); // pop watcher_id_list and evt_set
+    return 1;
+}
+
+int hello(lua_State* L)
+{
+    //{watcherid:={"A"={maker1={e='A',id=xx,x=xx,y=xx},},"D"={},"U"={}}}
+    printf("element num:%d\n",lua_gettop(L));
+    lua_newtable(L);
+    printf("element num:%d\n",lua_gettop(L));
+
+    int evt_id = 1;
+    int idx_ret = lua_gettop(L);
+    lua_rawgeti(L, idx_ret, evt_id);
+    printf("idx_ret is %d\n", idx_ret);
+    if(lua_isnil(L, -1)) {
+        printf("idx_ret is nil\n");
+        lua_pop(L, 1);
+        lua_newtable(L);
+        //lua_newtable(L);
+        lua_pushvalue(L, -1);
+        printf("element here:%d\n",lua_gettop(L));
+        lua_rawseti(L, idx_ret, evt_id);
+        printf("element there:%d\n",lua_gettop(L));
+    }
+
+    int idx_evt_set = lua_gettop(L);
+    printf("idx_evt_set is %d\n", idx_evt_set);
+    lua_Integer marker_id = 1;
+    lua_rawgeti(L, idx_evt_set, marker_id);
+    if(lua_isnil(L, -1)) {
+        printf("idx_evt_set is nil\n");
+        lua_pop(L, 1);
+        lua_newtable(L);
+        //lua_newtable(L);
+        lua_pushvalue(L, -1);
+        lua_rawseti(L, idx_evt_set, marker_id);
+    }
+    printf("element gg:%d\n",lua_gettop(L));
+    size_t len = lua_rawlen(L, -1);
+    printf("len is %lu\n",len);
+    lua_pushinteger(L, 2);
+    lua_rawseti(L, -2, len+1);
+    lua_pop(L, 2); // pop watcher_id_list and evt_set
+    return 1;
+}
+
+int wtf(lua_State* L)
+//返回一个table1，其中table1中的value也是table2，并且是table2是同一个，只是引用
+{
+    //{1={4,5},2={4,5}}
+    lua_newtable(L);
+    //创建table{4,5}
+    lua_newtable(L);
+    lua_pushinteger(L, 4);
+    lua_rawseti(L, -2, 1);
+    lua_pushinteger(L, 5);
+    lua_rawseti(L, -2, 2);
+
+    //1={4,5}
+    lua_rawseti(L, -2, 1);
+    //2={4,5}
+    lua_rawgeti(L, -1, 1);
+    lua_rawseti(L, -2, 2);
+    lua_pushinteger(L,100);
+    return 2;
+}
 //luaL_Reg结构体的第一个字段为字符串，在注册时用于通知Lua该函数的名字。
 //第一个字段为C函数指针。
 //结构体数组中的最后一个元素的两个字段均为NULL，用于提示Lua注册函数已经到达数组的末尾。
 static luaL_Reg mylibs[] ={
     {"add", add},
     {"sub", sub},
+    {"get", get},
+    {"hello", hello},
+    {"wtf",wtf},
     {NULL, NULL}
 };
 //该C库的唯一入口函数。其函数签名等同于上面的注册函数。见如下几点说明：
