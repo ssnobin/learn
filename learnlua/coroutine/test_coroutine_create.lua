@@ -4,6 +4,7 @@ local co = coroutine.create(
         return "coroutine return"
     end)
 print(co)
+print(type(co))
 print(coroutine.status(co))
 
 print(coroutine.resume(co))
