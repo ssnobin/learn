@@ -1,0 +1,21 @@
+./configure --prefix=/usr/local --enable-shared
+安装python3.6
+sudo cp libpython3.6m.so.1.0 /usr/local/lib/
+sudo cp libpython3.6m.so.1.0 /usr/lib/
+
+安装YCM
+make distclean
+./configure --with-features=huge \
+	--with-python3-command=python3.6 \
+	--enable-cscope \
+    --enable-multibyte \
+    --enable-rubyinterp=yes \
+    --enable-python3interp=yes \
+    --enable-perlinterp=yes \
+	--enable-luainterp=yes \
+	--with-luajit \
+    --prefix=/usr/local/vim
+
+移除vim
+sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-gui-common
+
