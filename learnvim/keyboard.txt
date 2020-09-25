@@ -1,0 +1,87 @@
+.命令:重复执行(可以记录插入模式下的所有操作，重复执行所有操作)
+d:delete
+>:向右缩进
+<:向左缩进
+G:文件末尾
+hjkl:左下上右
+x:删除字符
+a:append
+A:append at then end of line($a)
+$:move to end of line
+^:begin of line
+c:change
+C:$c
+s:cl
+S:^C
+I:^i
+o:A<CR>
+O:ko
+ftFT;,
+u:undo
+c_r:un undo,
+/?nN
+:s/target/replacement   替换
+&:重复执行:s
+*:查找当前词
+w:word(abc is a word)
+W:WORD(abc;d is a WORD)
+aw:a word
+iw:inner word
+<C-a>:add sth to current
+<C-x>:minus
+:h operator
+~ g~ gu gU:change lower/upper case
+Esc: <C-]>
+
+
+
+
+
+
+
+
+
+Insert Mode
+<C-h>|backspace
+---------------
+<C-w>|delete pre word;
+<C-u>|delete to begin of line;
+<C-o>|insert-normal mode;
+<C-r>0:paste(可能有不必要的换行)
+<C-r><C-p>0:paste(原义paste)
+<C-r>=5*4:随时做计算20
+<C-v>u00bf:插入非常用字符A¿
+<C-k>二合字母 ½
+
+替换模式
+R ah
+gR 虚拟替换模式，将tab当成n个空格
+
+V mode 可视模式
+<C-g>:select mode
+v V <C-v> gv
+o:切换选择端点
+
+命令行模式
+delete;
+yank;
+put;
+copy;
+move;
+join;
+normal;
+substitute;
+global;
+
+h ex-cmd-index
+@:  repeat
+<C-o>:回退bnext等命令行的命令
+<C-d>:显示命令行补全
+
+:color 修改配色方案
+<C-r><C-w>: 插入光标单词
+q: q/ <C-f> 命令行窗口
+
+vim paopao **/*.lua|copen
+:FZF fuzzy finder
+
