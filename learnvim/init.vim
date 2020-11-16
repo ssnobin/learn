@@ -76,6 +76,9 @@ Plug 'Yggdroot/indentLine'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale'
+
+Plug 'junegunn/goyo.vim' " distraction free writing mode
+Plug 'scrooloose/nerdcommenter' " in <space>cc to comment a line, <space>cu to cancel
 call plug#end()
 
 " ==
@@ -182,3 +185,8 @@ let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+" ===
+" === Goyo
+" ===
+map <LEADER>gy :Goyo<CR>
