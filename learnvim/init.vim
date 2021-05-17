@@ -185,6 +185,26 @@ let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_linters = {
+            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \   'asm': ['gcc'],
+            \   'nasm': ['nasm'],
+            \   'c': ['cppcheck', 'clang'],
+            \   'cpp': ['cppcheck', 'clang'],
+            \   'cmake': ['cmake-format'],
+            \   'python': ['pylint', 'flake8'],
+            \   'cuda': ['nvcc'],
+            \   'go': ['gofmt'],
+            \   'java': ['javac'],
+            \   'javascript': ['eslint'],
+            \   'shell': ['shell -n flag'],
+            \   'lua': ['luacheck'],
+            \   'yaml': ['prettier'],
+            \   'latex': ['alex'],
+            \   'vue': ['eslint'],
+            \ }
+
+map <LEADER>a :ALEToggle<CR>
 
 " ===
 " === Goyo
