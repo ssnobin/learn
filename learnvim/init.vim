@@ -99,7 +99,8 @@ call defx#custom#option('_', {
       \ 'show_ignored_files': 0,
       \ 'buffer_name': '',
       \ 'toggle': 1,
-      \ 'resume': 1
+      \ 'resume': 1,
+      \ 'ignored_files': '*.o,*.swp',
       \ })
 "nmap <silent> <LEADER>d :Defx <cr>
 nmap <silent> <LEADER>d :Defx<CR>
