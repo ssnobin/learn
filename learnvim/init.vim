@@ -60,6 +60,8 @@ noremap <silent><tab>c :tabclose<cr>
 noremap <silent><tab>n :tabn<cr>
 noremap <silent><tab>p :tabp<cr>
 
+nnoremap <Leader>w <C-w>
+
 set shell=sh
 "plugin
 call plug#begin("~/.vim/plugged")
